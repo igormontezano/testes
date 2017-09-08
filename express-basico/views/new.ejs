@@ -12,5 +12,8 @@
       Idade: <input type="text" name="idade" />
       <input type="submit" value="Salvar" />
     </form>
+    <% for (p in result) { %>
+      <%= result[p].nome %><br/>
+    <% } %>
   </body>
 </html>
