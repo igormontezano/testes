@@ -5,15 +5,23 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+      
     <h1><%= title %></h1>
+
     <p>Welcome to <%= title %></p>
     <form method="post">
-      Nome: <input type="text" name="nome" /><br />
-      Idade: <input type="text" name="idade" />
+      Nome: <input type="text" name="nome" value="<%= reg_edit ? reg_edit.nome : '' %>" /><br />
+      Idade: <input type="text" name="idade" value="<%= reg_edit ? reg_edit.idade : '' %>"/>
       <input type="submit" value="Salvar" />
     </form>
-    <% for (p in result) { %>
-      <%= result[p].nome %><br/>
-    <% } %>
+    <table>
+      <% for (p in result) { %>
+        <tr>
+          <td><a href="/new?_id=<%= result[p]._id %>"><%= result[p].nome %></a></td>
+          <td><%= result[p].idade %></td>
+          <td><a href="/new?_id=<%= result[p]._id %>&remover=true" onclick="return confirm('Remover <%= result[p].nome %>?')">Remover</a></td>
+        </tr>
+      <% } %>
+    </table>
   </body>
 </html>

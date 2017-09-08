@@ -8,8 +8,15 @@ mongoClient.connect("mongodb://localhost:27017/teste_mongo", function(err, conn)
 
 });
 
-function save(nome, idade, callback){
-    global.db.collection("pessoas").insert({nome, idade},function(err, result){
+function save(pessoa, callback){
+    global.db.collection("pessoas").save(pessoa,function(err, result){
+        if(err) return console.error(err);
+        callback(result);
+    });
+}
+
+function remove(pessoa, callback){
+    global.db.collection("pessoas").remove(pessoa,function(err, result){
         if(err) return console.error(err);
         callback(result);
     });
@@ -22,4 +29,13 @@ function find(callback){
     });
 }
 
-module.exports = { save , find};
+function findOne(id, callback){
+    global.db.collection("pessoas").findOne(id, function(err, res){
+        if(err) return console.error(err);
+        if(res){
+            callback(res);
+        }
+    });
+}
+
+module.exports = { save , find, findOne, remove};
