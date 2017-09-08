@@ -26,7 +26,7 @@ router.get('/new', function(req, res, next) {
     }
   }
   require("../db").find(function(result){
-    res.render('new', { title: 'Nova página' , reg_edit: reg, result});
+    res.render('new', { title: 'Manutenção de Pessoas' , reg_edit: reg, result});
   });
 });
 

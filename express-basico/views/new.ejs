@@ -2,26 +2,39 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <%- include('head-load') %>
   </head>
   <body>
-      
+    <%- include('header') %>
     <h1><%= title %></h1>
 
     <p>Welcome to <%= title %></p>
-    <form method="post">
-      Nome: <input type="text" name="nome" value="<%= reg_edit ? reg_edit.nome : '' %>" /><br />
-      Idade: <input type="text" name="idade" value="<%= reg_edit ? reg_edit.idade : '' %>"/>
-      <input type="submit" value="Salvar" />
+    <form method="post" class="form-inline">
+      <a href="/new" class="btn btn-default">Novo</a>
+      <input type="submit" value="Salvar" class="btn btn-default" />
+      <div class="form-group">
+        <input type="text" name="nome" placeholder="Nome" class="form-control" value="<%= reg_edit ? reg_edit.nome : '' %>" /><br />
+      </div>
+      <div class="form-group">
+        <input type="text" name="idade" placeholder="Idade" class="form-control" value="<%= reg_edit ? reg_edit.idade : '' %>"/>
+      </div>
     </form>
-    <table>
+
+    <div class="container-fluid">
       <% for (p in result) { %>
-        <tr>
-          <td><a href="/new?_id=<%= result[p]._id %>"><%= result[p].nome %></a></td>
-          <td><%= result[p].idade %></td>
-          <td><a href="/new?_id=<%= result[p]._id %>&remover=true" onclick="return confirm('Remover <%= result[p].nome %>?')">Remover</a></td>
-        </tr>
+      <div class="row">
+        <div class="col-md-8">
+          <a href="/new?_id=<%= result[p]._id %>"><%= result[p].nome %></a>
+        </div>
+        <div class="col-md-2">
+            <%= result[p].idade %>
+        </div>
+        <div class="col-md-2">
+          <a href="/new?_id=<%= result[p]._id %>&remover=true" onclick="return confirm('Remover <%= result[p].nome %>?')">Remover</a>
+        </div>
+      </div>
       <% } %>
-    </table>
+    </div>
+    <%- include('footer') %>
   </body>
 </html>
