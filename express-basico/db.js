@@ -1,6 +1,6 @@
 var mongoClient = require("mongodb").MongoClient;
 
-mongoClient.connect("mongodb://localhost:27017/crossfit", function(err, conn){
+mongoClient.connect("mongodb://localhost:27017/teste_mongo", function(err, conn){
 
     if(err) return console.error(err);
 
