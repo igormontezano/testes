@@ -1,7 +1,7 @@
 <template>
     <b-modal id="modalLogin" title="Login" size="sm"
       @shown="setFocus"
-      @ok="login"
+      @ok="trataLogin"
       @cancel="limpar"
       >
       <b-container fluid>
@@ -18,17 +18,23 @@
 </template>
 
 <script>
+
+import {login, logout, isLogged} from '../utils/auth';
+
 export default {
   name: 'Login',
   methods: {
     setFocus(e) {
       this.$refs.foco.focus();
     },
-    login(e){
-      console.log('Logando...'+this.user+' = '+ this.password);
-      alert('Logando...'+this.user+' = '+ this.password);
-      this.$router.push('/home');
-      },
+    trataLogin(e){
+      login(this.user, this.password);
+      if(isLogged()){
+        this.$router.push('/home');
+      } else {
+        alert('Erro de login: '+this.user+' = '+ this.password);
+      }
+    },
     limpar(e){
       console.log('Limpando...');
       this.user = '';

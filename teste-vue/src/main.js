@@ -9,15 +9,27 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false
 
+// Array de programas
+const programas = [
+  {
+    descricao: "Cadastro Geral",
+    pagina: "basico/cadastroGeral"
+  },
+  {
+    descricao: "Usuários",
+    pagina: "basico/usuarios"
+  },
+  {
+    descricao: "Categorias",
+    pagina: "basico/categorias"
+  }
+];
 
 import Home from './components/Home'
 const routes = [
-  { path: '/home', component: Home },
+  { path: '/home', component: Home, props: {programas} },
 ]
 
-// 3. Create the router instance and pass the `routes` option
-// You can pass in additional options here, but let's
-// keep it simple for now.
 const router = new VueRouter({
   routes // short for `routes: routes`
 })

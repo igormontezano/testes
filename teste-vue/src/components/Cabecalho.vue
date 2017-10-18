@@ -1,14 +1,15 @@
 <template>
   <div class="cabecalho">
-    <b-btn v-b-modal.modalLogin class="botao-login" >Login</b-btn>
-    <router-link to="/home" class="botao-login">Go to Home</router-link>
+    <b-btn v-show="!logado()" v-b-modal.modalLogin class="btn-info itensDireita" >Login</b-btn>
+    <b-btn v-show="logado()" class="btn-danger itensDireita" @click="efetuarLogout()" >Logout</b-btn>
+    <router-link to="/" class="itensDireita">Go back Root</router-link>
     <login />
-    <h1>{{msg}}</h1>
+    <h1 class="textoCabecalho">{{msg}}</h1>
   </div>
 </template>
 
 <script>
-
+import {isLogged, logout} from '../utils/auth';
 import Login from './Login'
 
 export default {
@@ -16,17 +17,35 @@ export default {
   props: ['msg'],
   components: {
     Login
+  },
+  methods: {
+    efetuarLogout(){
+      logout();
+    },
+    logado(){
+      console.log(isLogged());
+      return isLogged();
+    }
   }
 }
 </script>
 
 <style scoped >
 .cabecalho {
-    top: 0;
-    width: 100%;
+  border-bottom: 1px solid black;
+  top: 0;
+  height: 60px;
+  line-height: 60px;
+  width: 100%;
 }
 
-.botao-login{
+.textoCabecalho{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.itensDireita{
   float: right;
+  margin-right: 5px;
 }
 </style>
