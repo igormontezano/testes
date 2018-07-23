@@ -21,21 +21,19 @@ export default class AutenticacaoService {
             "url": config.url+"/service/autenticacao/",
             "method": "POST",
             "headers": {
-              "content-type": "application/json",
-              "cache-control": "no-cache"
+              "content-type": "application/json"
             },
             "processData": false,
             "data": JSON.stringify(pacote)
           };
           
           $.ajax(settings).done(function (response) {
-            console.log(response);
-          }).fail(function(a,b,c){
-              console.log('Gravando Cookie');
-              Cookies.set(
+            console.log('Gravando Cookie',response);
+            Cookies.set(
                 "grp_token",
-                "fn2398niu4fniub348973bu4f5kj45ngho495rt8nv9",
-                {secure:true})
+                response);
+          }).fail(function(a,b,c){
+              this.deslogar();
           });
     }
 
@@ -44,6 +42,41 @@ export default class AutenticacaoService {
     }
 
     estaLogado(){
-        return Cookies.get("grp_token") != null;
+        var that = this;
+        return new Promise(function(resolve, reject){
+            const token = Cookies.get("grp_token");
+            if(token != null){
+                that.validaToken().done(function (response) {
+                    console.log("validado!", response);
+                    resolve();
+                }).fail(function(a,b,c){
+                    console.log("NÃO validado!");
+                    reject();
+                })
+            } else {
+                reject();
+            }
+        });
     }
+
+    validaToken(){
+        console.log("Validando Token!")
+        const token = Cookies.get("grp_token");
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": config.url+"/service/autenticacao/informacoesToken/",
+            "method": "POST",
+            "headers": {
+              "authorization": token,
+              "content-type": "application/json"
+            },
+            "processData": false,
+            "data": token
+          }
+          
+        return $.ajax(settings);
+    }
+
 }

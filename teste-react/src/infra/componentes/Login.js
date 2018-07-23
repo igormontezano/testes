@@ -21,8 +21,7 @@ export default class Login extends React.Component {
         super();
         this.state = {
             usuario: '',
-            senha: '',
-            logado: false
+            senha: ''
         }
     }
 
@@ -39,13 +38,12 @@ export default class Login extends React.Component {
         }
     }
     componentDidMount(){
-        console.log(this.usuarioInput);
-        //this.usuarioInput.focus();
+        // console.log(this.usuarioInput);
+        this.usuarioInput.inputEl.focus();
     }
     render() {
         const footer = (
             <div>
-                <p>Logado? {this.state.logado}</p>
                 <Button label="Login" icon="pi pi-check" onClick={this.login.bind(this)} />
             </div>
         );

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 // import $ from "jquery";
 
-import Login from './infra/componentes/Login';
-
 import './App.css';
 import { Button } from 'primereact/button';
+
+// Servicos
+import AutenticacaoService from './infra/services/AutenticacaoService';
+// Componentes Thema
+import Login from './infra/componentes/Login';
+
 
 export class App extends Component {
 
@@ -13,18 +17,30 @@ export class App extends Component {
     this.state = {
       mostraLogin: false
     }
+    this.auth = new AutenticacaoService();
   }
 
   componentDidMount() {
-    // testar autenticacao
+    // testa autenticacao
     // senão autenticado, abrir modal login
+    var that = this;
+
+    this.auth.estaLogado().catch(
+      function(){
+        console.log('Retornou false... abrindo login');
+        that.abrirLogin();
+    });
+  }
+
+  abrirLogin(){
+    this.setState({
+      mostraLogin: true
+    });
   }
 
   autenticar(event){
     event.preventDefault();
-    this.setState({
-      mostraLogin: true
-    })
+    this.abrirLogin();
   }
 
   hideLogin(){
