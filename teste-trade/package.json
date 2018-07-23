@@ -1,0 +1,13 @@
+{
+  "name": "teste-trade",
+  "version": "1.0.0",
+  "description": "",
+  "main": "trade.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "IGor Montezano",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^2.2.33"}
+}

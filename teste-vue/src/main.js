@@ -13,15 +13,15 @@ Vue.config.productionTip = false
 const programas = [
   {
     descricao: "Cadastro Geral",
-    pagina: "basico/cadastroGeral"
+    page: "basico/cadastroGeral"
   },
   {
     descricao: "Usuários",
-    pagina: "basico/usuarios"
+    page: "basico/usuarios"
   },
   {
     descricao: "Categorias",
-    pagina: "basico/categorias"
+    page: "basico/categorias"
   }
 ];
 

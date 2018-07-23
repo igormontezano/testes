@@ -1,0 +1,6 @@
+Chave
+PirY7KM6Uk4TBiQTSO8jQ3w0Me7Qe68vxifk22WgxtE
+Senha
+LrV1Ntnkj6lbB5r
+Segredo
+fojSn3bYMD2VpxssoY5zs3c2kDFZ24VVdRlQwNE03Zc
