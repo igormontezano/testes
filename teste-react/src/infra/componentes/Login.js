@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 
 // Servicos
 import AutenticacaoService from '../services/AutenticacaoService';
-
+import config from '../../config';
 
 export default class Login extends React.Component {
 
@@ -48,6 +48,16 @@ export default class Login extends React.Component {
         }
     }
     onShow(){
+        if(config.usuario && config.senha){
+            this.usuarioInput.inputEl.value = config.usuario;
+            this.senhaInput.inputEl.value = config.senha;
+            let that = this;
+            this.setState((state) => {
+                state.usuario = config.usuario;
+                state.senha = config.senha;
+                that.login();
+            });
+        }
         this.usuarioInput.inputEl.focus();
     }
     render() {
@@ -77,6 +87,7 @@ export default class Login extends React.Component {
                             required={true}
                             value={this.state.usuario}
                             onChange={(e) => this.setState({usuario: e.target.value})}
+                            onKeyPress={this._handleKeyPress.bind(this)}
                         />
                         <label htmlFor="senha">Senha</label>
                         <Password
@@ -84,6 +95,7 @@ export default class Login extends React.Component {
                             autoComplete='off'
                             required={true}
                             feedback={false}
+                            ref={(input) => { this.senhaInput = input; }} 
                             value={this.state.senha}
                             onKeyPress={this._handleKeyPress.bind(this)}
                             onChange={(e) => this.setState({senha: e.target.value})}
