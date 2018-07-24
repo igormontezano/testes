@@ -12,29 +12,22 @@ export default class AutenticacaoService {
             origem: 'portal',
             uuid: new Date().getTime()
         };
-
+        
         console.debug(pacote);
-
+        
         var settings = {
             "async": true,
             "crossDomain": true,
             "url": config.url+"/service/autenticacao/",
             "method": "POST",
             "headers": {
-              "content-type": "application/json"
+                "content-type": "application/json"
             },
             "processData": false,
             "data": JSON.stringify(pacote)
-          };
-          
-          $.ajax(settings).done(function (response) {
-            console.log('Gravando Cookie',response);
-            Cookies.set(
-                "grp_token",
-                response);
-          }).fail(function(a,b,c){
-              this.deslogar();
-          });
+        };
+        
+        return $.ajax(settings);
     }
 
     deslogar(){

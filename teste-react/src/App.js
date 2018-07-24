@@ -43,6 +43,10 @@ export class App extends Component {
     this.abrirLogin();
   }
 
+  deslogar(){
+    this.auth.deslogar();
+  }
+
   hideLogin(){
     this.setState({
       mostraLogin: false
@@ -54,6 +58,7 @@ export class App extends Component {
       <div className="App">
         <Login mostrar={this.state.mostraLogin} onHide={this.hideLogin.bind(this)} />
         <Button label="Login" icon="pi pi-check" onClick={this.autenticar.bind(this)} />
+        <Button label="Logout" icon="pi pi-user" onClick={this.deslogar.bind(this)} />
       </div>
     );
   }
