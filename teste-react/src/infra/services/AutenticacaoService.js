@@ -44,9 +44,11 @@ export default class AutenticacaoService {
                     resolve();
                 }).fail(function(a,b,c){
                     console.log("NÃO validado!");
+                    that.deslogar();
                     reject();
                 })
             } else {
+                that.deslogar();
                 reject();
             }
         });
