@@ -71,7 +71,7 @@ export default class Login extends React.Component {
             <div>
                 <Dialog header="Login"
                     visible={this.props.mostrar}
-                    width="550px"
+                    width="450px"
                     modal={true}
                     footer={footer}
                     minY={70}
@@ -80,26 +80,36 @@ export default class Login extends React.Component {
                     maximizable={false}>
                     <form>
                         <Messages ref={(el) => {this.messages = el;} } />
-                        <label htmlFor="usuario">Usuário</label>
-                        <InputText autoFocus
-                            id="usuario"
-                            ref={(input) => { this.usuarioInput = input; }} 
-                            required={true}
-                            value={this.state.usuario}
-                            onChange={(e) => this.setState({usuario: e.target.value})}
-                            onKeyPress={this._handleKeyPress.bind(this)}
-                        />
-                        <label htmlFor="senha">Senha</label>
-                        <Password
-                            id="senha"
-                            autoComplete='off'
-                            required={true}
-                            feedback={false}
-                            ref={(input) => { this.senhaInput = input; }} 
-                            value={this.state.senha}
-                            onKeyPress={this._handleKeyPress.bind(this)}
-                            onChange={(e) => this.setState({senha: e.target.value})}
-                        />
+                        <div className="ui-g">
+                            <div className="ui-g-6">
+                                <label htmlFor="usuario">Usuário</label>
+                            </div>
+                            <div className="ui-g-6">
+                                <InputText autoFocus
+                                    id="usuario"
+                                    ref={(input) => { this.usuarioInput = input; }} 
+                                    required={true}
+                                    value={this.state.usuario}
+                                    onChange={(e) => this.setState({usuario: e.target.value})}
+                                    onKeyPress={this._handleKeyPress.bind(this)}
+                                />
+                            </div>
+                            <div className="ui-g-6">
+                                <label htmlFor="senha">Senha</label>
+                            </div>
+                            <div className="ui-g-6">
+                                <Password
+                                    id="senha"
+                                    autoComplete='off'
+                                    required={true}
+                                    feedback={false}
+                                    ref={(input) => { this.senhaInput = input; }} 
+                                    value={this.state.senha}
+                                    onKeyPress={this._handleKeyPress.bind(this)}
+                                    onChange={(e) => this.setState({senha: e.target.value})}
+                                />
+                            </div>
+                        </div>
                     </form>
                 </Dialog>
 

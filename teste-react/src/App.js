@@ -15,6 +15,7 @@ export class App extends Component {
   constructor(){
     super();
     this.state = {
+      logado: false,
       mostraLogin: false
     }
     this.auth = new AutenticacaoService();
@@ -25,7 +26,9 @@ export class App extends Component {
     // senão autenticado, abrir modal login
     var that = this;
 
-    this.auth.estaLogado().catch(
+    this.auth.estaLogado().then(
+      () => that.setState({logado: true})
+    ).catch(
       function(){
         console.log('Retornou false... abrindo login');
         that.abrirLogin();
@@ -34,6 +37,7 @@ export class App extends Component {
 
   abrirLogin(){
     this.setState({
+      logado: false,
       mostraLogin: true
     });
   }
@@ -45,11 +49,15 @@ export class App extends Component {
 
   deslogar(){
     this.auth.deslogar();
+    this.setState({
+      logado: false
+    });
   }
 
   hideLogin(){
     this.setState({
-      mostraLogin: false
+      mostraLogin: false,
+      logado: true
     })
   }
 
@@ -57,8 +65,8 @@ export class App extends Component {
     return (
       <div className="App">
         <Login mostrar={this.state.mostraLogin} onHide={this.hideLogin.bind(this)} />
-        <Button label="Login" icon="pi pi-check" onClick={this.autenticar.bind(this)} />
-        <Button label="Logout" icon="pi pi-user" onClick={this.deslogar.bind(this)} />
+        <Button label="Login" disabled={this.state.logado ? "disabled" : "" } icon="pi pi-check" onClick={this.autenticar.bind(this)} />
+        <Button label="Logout" disabled={this.state.logado ? "" : "disabled" } icon="pi pi-user" onClick={this.deslogar.bind(this)} />
       </div>
     );
   }
