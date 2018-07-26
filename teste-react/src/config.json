@@ -1,6 +1,10 @@
 {
     "codigo":"60030",
-    "usuario1":"acessodireto",
+    "usuario":"acessodireto",
     "senha":"acessodireto",
-    "url":"https://grpdsv.thema.inf.br/grp"
+    "url":"https://grpdsv.thema.inf.br/grp",
+    
+    "bundleDir":"./resources/i18n/",
+    "lang":"en_US"
+
 }

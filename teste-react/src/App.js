@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import './App.css';
 import { Button } from 'primereact/button';
 
+// Config
+import Intl from './i18n';
 // Servicos
 import AutenticacaoService from './infra/services/AutenticacaoService';
 // Componentes Thema
@@ -14,11 +16,14 @@ export class App extends Component {
 
   constructor(){
     super();
+    // this.homeBundle = loader(config.lang ,config.bundleDir,"home");
     this.state = {
       logado: false,
       mostraLogin: false
     }
     this.auth = new AutenticacaoService();
+    this.intl = new Intl();
+    console.log(this.intl.get("login"));
   }
 
   componentDidMount() {
