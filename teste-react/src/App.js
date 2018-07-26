@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import './App.css';
 import { Button } from 'primereact/button';
 
+// Config
+import Intl from './i18n';
 // Servicos
 import AutenticacaoService from './infra/services/AutenticacaoService';
 // Componentes Thema
@@ -14,16 +16,20 @@ export class App extends Component {
 
   constructor(){
     super();
+    // this.homeBundle = loader(config.lang ,config.bundleDir,"home");
     this.state = {
       mostraLogin: false
     }
     this.auth = new AutenticacaoService();
+    this.intl = new Intl();
+    console.log(this.intl.get("login"));
   }
 
   componentDidMount() {
     // testa autenticacao
     // senão autenticado, abrir modal login
     var that = this;
+
 
     this.auth.estaLogado().catch(
       function(){
