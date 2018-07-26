@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 // import $ from "jquery";
 
 import './App.css';
@@ -10,6 +11,8 @@ import Intl from './i18n';
 import AutenticacaoService from './infra/services/AutenticacaoService';
 // Componentes Thema
 import Login from './infra/componentes/Login';
+
+import FieldTeste from './FieldTeste';
 
 
 export class App extends Component {
@@ -72,6 +75,7 @@ export class App extends Component {
         <Login mostrar={this.state.mostraLogin} onHide={this.hideLogin.bind(this)} />
         <Button label="Login" disabled={this.state.logado ? "disabled" : "" } icon="pi pi-check" onClick={this.autenticar.bind(this)} />
         <Button label="Logout" disabled={this.state.logado ? "" : "disabled" } icon="pi pi-user" onClick={this.deslogar.bind(this)} />
+        <FieldTeste initialValue="Teste!" />
       </div>
     );
   }
