@@ -1,8 +1,12 @@
 {
-    "codigo":"60030",
-    "usuario":"acessodireto",
+
+    "reCaptcha_siteKey": "6LfWzmYUAAAAAAlJh2WU0730uCzctN4C0luWRXV5",
+
+    "_usuario":"acessodireto",
     "senha":"acessodireto",
-    "url":"https://grpdsv.thema.inf.br/grp",
+    "_url":"https://grpdsv.thema.inf.br/grp",
+    "url":"http://192.168.1.149:8080/themagrp",
+
     
     "bundleDir":"./resources/i18n/",
     "lang":"en_US"

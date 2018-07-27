@@ -85,7 +85,7 @@ export default class Login extends React.Component {
                                 <label htmlFor="usuario">Usuário</label>
                             </div>
                             <div className="ui-g-6">
-                                <InputText autoFocus
+                                <InputText
                                     id="usuario"
                                     ref={(input) => { this.usuarioInput = input; }} 
                                     required={true}
