@@ -52,8 +52,8 @@ export class App extends Component {
     });
 
     let programaService = new ProgramaService();
-    console.log(url.parse(window.location.search).query.split('=')[1]);
-    programaService.get('689429').done(
+    url.parse(window.location.search).query.split('=')[1]
+    programaService.get(url.parse(window.location.search).query.split('=')[1]).done(
       function(data){
         console.log("Abrindo programa...");
         that.setState({
