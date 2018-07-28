@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
+import url from 'url';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -51,6 +52,7 @@ export class App extends Component {
     });
 
     let programaService = new ProgramaService();
+    console.log(url.parse(window.location.search).query.split('=')[1]);
     programaService.get('689429').done(
       function(data){
         console.log("Abrindo programa...");
