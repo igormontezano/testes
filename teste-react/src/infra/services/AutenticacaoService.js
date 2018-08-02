@@ -1,9 +1,21 @@
+import axios from 'axios';
+
 import $ from "jquery"; 
 import Cookies from "js-cookie";
 
 import config from '../../config';
 
 export default class AutenticacaoService {
+
+    constructor(){
+        super();
+        this.conex = axios.create({
+            baseURL: config.url,
+            timeout: 1000,
+            headers: {"content-type": "application/json"}
+          });
+    }
+
     logar(user, pass){
 
         let pacote = {

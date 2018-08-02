@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
 
+
+import {createStore} from 'redux';
+
 import { Button } from 'primereact/button';
 import {BreadCrumb} from 'primereact/breadcrumb';
 
@@ -36,13 +39,24 @@ export class App extends Component {
     ];
     this.home = {icon: 'pi pi-home', url: 'https://www.primefaces.org/primereact'};
     
+    this.store = createStore(this.reduce);
+    this.store.subscribe(() => {console.log(this.store.getState())});
+  }
+
+  reduce = (state = {}, action) => {
+    switch (action.type) {
+      case 'ABRIR_PROGRAMA':
+        return state.programa = {};
+      default:
+        return state;
+    }
   }
 
   componentDidMount() {
+    var that = this;
+    
     // testa autenticacao
     // senão autenticado, abrir modal login
-    var that = this;
-
     this.auth.estaLogado().then(
       () => that.setState({logado: true})
     ).catch(
@@ -51,18 +65,29 @@ export class App extends Component {
         that.abrirLogin();
     });
 
+    // Busca programa pelo código recebido
     let programaService = new ProgramaService();
-    url.parse(window.location.search).query.split('=')[1]
-    programaService.get(url.parse(window.location.search).query.split('=')[1]).done(
-      function(data){
-        console.log("Abrindo programa...");
-        that.setState({
-          controlado: data
-        });
-        that.addComponent(data.componente);
+    let urlParsed = url.parse(window.location.search);
+    if(urlParsed.query){
+      let splited = urlParsed.query.split('=');
+      if(splited[0] && splited[0] === 'codigo'){
+        let cdPrograma = splited[1];
+        programaService.get(cdPrograma).done(
+          function(data){
+            console.log("Abrindo programa...");
+            that.store.dispatch({type: 'ABRIR_PROGRAMA'});
+            that.setState({
+              controlado: data
+            });
+            that.addComponent(data.componente);
+          }
+        );
+      } else {
+        console.log('Sem programa para abrir!');
       }
-    );
-
+    } else {
+      console.log('Sem programa para abrir!');
+    }
   }
 
   abrirLogin(){
@@ -116,11 +141,11 @@ export class App extends Component {
     return (
         <div className="container">
 
-          
-
           <div  className="row">
             <div className="col-md-12">
+
               <BreadCrumb model={this.programas} home={this.home}/>
+
               <div className="m-header">
                 <h1><i className="fa fa-user fa-lg"></i>{this.state.controlado.descricao}</h1>
                 <a href=""><i className="fa fa-question-circle fa-lg pull-right"></i></a>
