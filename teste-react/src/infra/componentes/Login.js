@@ -11,8 +11,6 @@ import 'primereact/resources/themes/omega/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-import Cookies from "js-cookie";
-
 // Servicos
 import AutenticacaoService from '../services/AutenticacaoService';
 import config from '../../config';
@@ -31,12 +29,11 @@ export default class Login extends React.Component {
         let auth = new AutenticacaoService();
         let that = this;
         auth.logar(this.state.usuario, this.state.senha)
-        .done(function (response) {
-            Cookies.set("grp_token",response);
-            console.log('Sucesso no login!',response);
+        .then(function (response) {
+            console.log('Sucesso no login!',response.data);
             that.setState({logado: true});
             that.props.onHide();
-        }).fail(function(a,b,c){
+        }).catch(function(a,b,c){
             that.messages.show({severity: 'error', summary: 'Erro ao logar!'});
             console.error(a,b,c);
         });

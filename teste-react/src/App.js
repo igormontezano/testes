@@ -53,16 +53,17 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    var that = this;
+    // var that = this;
     
     // testa autenticacao
     // senão autenticado, abrir modal login
-    this.auth.estaLogado().then(
-      () => that.setState({logado: true})
+    this.auth.estaLogado(
+    ).then(
+      () => this.setState({logado: true})
     ).catch(
-      function(){
+      () => {
         console.log('Retornou false... abrindo login');
-        that.abrirLogin();
+        this.abrirLogin();
     });
 
     // Busca programa pelo código recebido
@@ -72,16 +73,16 @@ export class App extends Component {
       let splited = urlParsed.query.split('=');
       if(splited[0] && splited[0] === 'codigo'){
         let cdPrograma = splited[1];
-        programaService.get(cdPrograma).done(
-          function(data){
+        programaService.get(cdPrograma).then(
+          (response) => {
             console.log("Abrindo programa...");
-            that.store.dispatch({type: 'ABRIR_PROGRAMA'});
-            that.setState({
-              controlado: data
+            this.store.dispatch({type: 'ABRIR_PROGRAMA'});
+            this.setState({
+              controlado: response.data
             });
-            that.addComponent(data.componente);
+            this.addComponent(response.data.componente);
           }
-        );
+        ).catch((err) => console.log(err));
       } else {
         console.log('Sem programa para abrir!');
       }

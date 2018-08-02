@@ -1,17 +1,9 @@
-import $ from "jquery"; 
+import BaseService from "./BaseService";
 
-import config from '../../config';
-
-export default class ProgramaService {
+export default class ProgramaService extends BaseService {
 
     get(codigo){
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": config.url+"/service/programa/"+codigo,
-            "method": "GET"
-        }
-        return $.ajax(settings);
+        return this.conex.get("/service/programa/"+codigo);
     }
 
 }

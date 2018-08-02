@@ -1,89 +1,51 @@
-import axios from 'axios';
-
-import $ from "jquery"; 
 import Cookies from "js-cookie";
+import BaseService from "./BaseService";
 
-import config from '../../config';
-
-export default class AutenticacaoService {
-
-    constructor(){
-        super();
-        this.conex = axios.create({
-            baseURL: config.url,
-            timeout: 1000,
-            headers: {"content-type": "application/json"}
-          });
-    }
+export default class AutenticacaoService extends BaseService {
 
     logar(user, pass){
-
         let pacote = {
             usuario: user,
             senha: pass,
             origem: 'portal',
             uuid: new Date().getTime()
         };
-        
-        console.debug(pacote);
-        
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": config.url+"/service/autenticacao/",
-            "method": "POST",
-            "headers": {
-                "content-type": "application/json"
-            },
-            "processData": false,
-            "data": JSON.stringify(pacote)
-        };
-        
-        return $.ajax(settings);
+        return new Promise(
+            (resolve, reject) => {
+            this.conex.post('/service/autenticacao/', pacote
+            ).then((response) => {
+                Cookies.set("grp_token",response.data);
+                super.configuraConexaoAutenticada();
+                resolve(response);
+            }).catch(
+                () => reject() );
+        });
     }
 
     deslogar(){
         Cookies.remove("grp_token");
+        this.token = null;
     }
 
     estaLogado(){
-        var that = this;
-        return new Promise(function(resolve, reject){
-            const token = Cookies.get("grp_token");
-            if(token != null){
-                that.validaToken().done(function (response) {
-                    console.log("validado!", response);
-                    resolve();
-                }).fail(function(a,b,c){
-                    console.log("NÃO validado!");
-                    that.deslogar();
+        return new Promise(
+            (resolve, reject) => {
+            if(this.token != null){
+                this.validaToken().then(
+                    (response) => resolve(response)
+                ).catch(
+                    (a,b,c) => {
+                    this.deslogar();
                     reject();
                 })
             } else {
-                that.deslogar();
+                this.deslogar();
                 reject();
             }
         });
     }
 
     validaToken(){
-        console.log("Validando Token!")
-        const token = Cookies.get("grp_token");
-
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": config.url+"/service/autenticacao/informacoesToken/",
-            "method": "POST",
-            "headers": {
-              "authorization": token,
-              "content-type": "application/json"
-            },
-            "processData": false,
-            "data": token
-          }
-          
-        return $.ajax(settings);
+        return this.conex.post("/service/autenticacao/informacoesToken/",this.token);
     }
-
 }
