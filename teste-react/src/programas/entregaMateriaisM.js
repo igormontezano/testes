@@ -6,6 +6,9 @@ import {InputText} from 'primereact/inputtext';
 import {Captcha} from 'primereact/captcha';
 import {Button} from 'primereact/button';
 
+import { Document, Page } from 'react-pdf';
+
+
 import 'primereact/resources/themes/omega/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -44,6 +47,9 @@ export default class Programas extends Component {
                         />
                         <Captcha siteKey={config.reCaptcha_siteKey} onResponse={this.showResponse.bind(this)}></Captcha>
                         <Button label="Validar" icon="pi pi-check" onClick={this.validar.bind(this)} />
+                        <Document file="https://grpdsv.thema.inf.br/grp/assinador/jzxAssinatura/download/getFile.doc?numero=22352" >
+                            <Page pageNumber={1} />
+                        </Document>
                     </Fieldset>
                 </form>
             </div>
